@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Product from '../../components/Product'
 
-export default class ProductsPage extends Component {
+export default class Products extends Component {
   state = {
     products: []
   }
