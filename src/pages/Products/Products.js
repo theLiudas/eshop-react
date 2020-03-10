@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Product from '../../components/Product'
-
+import { Flex } from '../../components/shared/Flex/Flex'
 export default class Products extends Component {
   state = {
     products: []
@@ -17,11 +17,11 @@ export default class Products extends Component {
   render() {
     const { products } = this.state
     return (
-      <div className="container">
+      <Flex wrap="wrap" justify="space-between">
         {products.map(product => (
           <Product key={product.id} product={product} />
         ))}
-      </div>
+      </Flex>
     )
   }
 }

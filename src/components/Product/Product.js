@@ -1,9 +1,10 @@
 import React from 'react'
+import classes from './Product.module.css'
 
 export const Product = ({ product }) => {
   const { image, name, description, price, quantity } = product
   return (
-    <div className="product">
+    <div className={classes.product}>
       <div className="image">
         <img src={image} alt={name} />
       </div>
