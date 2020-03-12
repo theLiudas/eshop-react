@@ -3,26 +3,33 @@ import Modal from 'react-modal'
 import classes from './CreateProductModal.module.css'
 import { random } from 'faker'
 
-// TODO: update products list
+const emptyObject = () => ({
+  id: random.uuid(),
+  name: '',
+  description: '',
+  price: 0,
+  quantity: '',
+  image: `https://picsum.photos/id/${random.number(200) || 1}/600`
+})
 
-export const CreateProductModal = ({ isModalOpen, toggleModal }) => {
-  const [formState, setFormState] = useState({
-    id: random.uuid(),
-    name: '',
-    description: '',
-    price: 0,
-    quantity: '',
-    image: `https://picsum.photos/id/${random.number(200) || 1}/600`
-  })
+export const CreateProductModal = ({
+  isModalOpen,
+  toggleModal,
+  addNewProduct
+}) => {
+  const [formState, setFormState] = useState(emptyObject())
   const [errors, setErrors] = useState({})
   const [success, setSuccess] = useState(false)
 
+  const resetForm = () => {
+    setFormState(emptyObject())
+    setSuccess(false)
+  }
+
+  // Variantas
   useEffect(() => {
-    console.log('rendered `CreateProductModal.js`')
-    return () => {
-      console.log('unmounted `CreateProductModal.js`')
-    }
-  }, [])
+    resetForm()
+  }, [isModalOpen])
 
   const generateDescriptionHandler = event => {
     event.preventDefault()
@@ -30,17 +37,6 @@ export const CreateProductModal = ({ isModalOpen, toggleModal }) => {
       ...formState,
       description: random.words(250)
     })
-  }
-
-  const resetForm = () => {
-    setFormState({
-      ...formState,
-      name: '',
-      description: '',
-      price: 0,
-      quantity: ''
-    })
-    setSuccess(false)
   }
 
   const inputChangeHandler = (formStateKey, event) =>
@@ -88,7 +84,12 @@ export const CreateProductModal = ({ isModalOpen, toggleModal }) => {
         },
         body: JSON.stringify(formStateCopy)
       })
-      response.status === 201 && setSuccess(true)
+
+      if (response.status === 201) {
+        setSuccess(true)
+        const newProduct = await response.json()
+        addNewProduct(newProduct)
+      }
     }
   }
 
