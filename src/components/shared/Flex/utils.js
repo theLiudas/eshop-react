@@ -23,6 +23,9 @@ export const justifyHelper = (styles, justify, classes) => {
     case 'flex-end':
       styles.push(classes.flexEnd)
       break
+    case 'center':
+      styles.push(classes.center)
+      break
     default:
       break
   }
