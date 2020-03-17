@@ -10,6 +10,9 @@ export const Button = ({ onClick, children, type, disabled }) => {
     case 'secondary':
       styles.push(classes.blue)
       break
+    case 'danger':
+      styles.push(classes.red)
+      break
     default:
       break
   }

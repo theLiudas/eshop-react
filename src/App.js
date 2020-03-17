@@ -12,7 +12,7 @@ function App() {
   // 3. Carte negali buti daugiau produktu nei produkto quantity +++
   // 4. Nenaudoti localStorage +++
   // -----------------------------------------------------------
-  // 5. Atvaizduoti produktus cart'e
+  // 5. Atvaizduoti produktus cart'e +++
   // 6. Virš "CART" link'o turi būti burbuliukas indikuojantis produktų skaičių +++
   const [cart, setCart] = useState([])
 

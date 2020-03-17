@@ -26,8 +26,18 @@ export const Product = ({ product, cart, setCart, isInCart }) => {
     }
   }
 
-  const removeHandler = () => {
-    // cia reikia removinimo logika deti
+  const removeFromCartHandler = () => {
+    const itemToRemove = cart.find(cartItem => cartItem.id === id)
+    const itemToRemoveIndex = cart.findIndex(cartItem => cartItem.id === id)
+
+    if (itemToRemove.cartQuantity === 1) {
+      setCart(cart.filter(cartItem => cartItem.id !== id))
+    }
+    if (itemToRemove.cartQuantity > 1) {
+      const cartCopy = [...cart]
+      cartCopy[itemToRemoveIndex].cartQuantity -= 1
+      setCart(cartCopy)
+    }
   }
 
   useEffect(() => {
@@ -54,7 +64,7 @@ export const Product = ({ product, cart, setCart, isInCart }) => {
       <div className={classes.buttonList}>
         <Flex justify="center">
           {isInCart ? (
-            <Button type="danger" onClick={removeHandler}>
+            <Button type="danger" onClick={removeFromCartHandler}>
               Delete
             </Button>
           ) : (
