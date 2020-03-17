@@ -8,13 +8,33 @@
   font-weight: 600;
   text-decoration: none;
 }
-.link ~ .link {
-  margin-left: 1rem;
-}
 .bigLink {
   font-size: 2rem;
   color: grey;
   font-weight: bold;
   font-family: Georgia, 'Times New Roman', Times, serif;
   text-decoration: none;
+}
+.linkWrapper div ~ div {
+  margin-left: 1rem;
+}
+
+.linkWrapper div:last-child {
+  position: relative;
+}
+
+.cartBubble {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background: red;
+  color: white;
+  font-size: 14px;
+  border-radius: 100%;
+  left: -10px;
+  font-weight: bold;
+  bottom: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

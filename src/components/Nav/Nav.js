@@ -3,7 +3,11 @@ import classes from './Nav.module.css'
 import { Flex } from '../shared/Flex/Flex'
 import { Link } from 'react-router-dom'
 
-export const Nav = () => {
+export const Nav = ({ cart }) => {
+  const itemsInCart = cart.reduce(
+    (current, currentItem) => current + currentItem.cartQuantity,
+    0
+  )
   return (
     <Flex
       justify="space-between"
@@ -16,16 +20,23 @@ export const Nav = () => {
         </Link>
       </div>
       <nav>
-        <Flex>
-          <Link className={classes.link} to="/">
-            Products
-          </Link>
-          <Link className={classes.link} to="/orders">
-            Orders
-          </Link>
-          <Link className={classes.link} to="/cart">
-            Cart
-          </Link>
+        <Flex className={classes.linkWrapper}>
+          <div>
+            <Link className={classes.link} to="/">
+              Products
+            </Link>
+          </div>
+          <div>
+            <Link className={classes.link} to="/orders">
+              Orders
+            </Link>
+          </div>
+          <div>
+            <div className={classes.cartBubble}>{itemsInCart}</div>
+            <Link className={classes.link} to="/cart">
+              Cart
+            </Link>
+          </div>
         </Flex>
       </nav>
     </Flex>
