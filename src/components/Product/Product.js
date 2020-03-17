@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './Product.module.css'
 import { Button } from '../shared/Button/Button'
 import { Flex } from '../shared/Flex/Flex'
 
-export const Product = ({ product, test }) => {
-  const { image, name, description, price, quantity } = product
+export const Product = ({ product, cart, setCart, isInCart }) => {
+  const [isAddToCartDisabled, setIsAddToCartDisabled] = useState(false)
+  const { image, name, description, price, quantity, id } = product
   const shortDescription =
     (description || '')
       .split(' ')
@@ -12,9 +13,30 @@ export const Product = ({ product, test }) => {
       .join(' ') + '...'
 
   const addToCartHandler = () => {
-    console.log(product.id)
-    // we'll perform code which adds product to cart
+    const productIndex = cart.findIndex(cartItem => cartItem.id === id)
+    if (productIndex >= 0) {
+      // Sitas if'as praeina kai produktas jau yra krepselyje
+      const cartCopy = [...cart]
+      cartCopy[productIndex].cartQuantity += 1
+      setCart(cartCopy)
+    }
+    if (productIndex === -1) {
+      // Sitas if'as praeina kai produkto nera krepselyje
+      setCart([...cart, { ...product, cartQuantity: 1 }])
+    }
   }
+
+  const removeHandler = () => {
+    // cia reikia removinimo logika deti
+  }
+
+  useEffect(() => {
+    if (!isInCart) {
+      const productInCart = cart.find(cartItem => cartItem.id === id)
+      const { cartQuantity } = productInCart || {}
+      setIsAddToCartDisabled(cartQuantity >= quantity)
+    }
+  }, [cart, id, quantity])
 
   return (
     <div className={classes.product}>
@@ -22,15 +44,27 @@ export const Product = ({ product, test }) => {
         <img src={image} alt={name} />
       </div>
       <div className={classes.productName}>{name}</div>
-      <div className={classes.shortDescription}>{shortDescription}</div>
+      {!isInCart && (
+        <div className={classes.shortDescription}>{shortDescription}</div>
+      )}
       <div className={classes.bold}>Price: {price}€</div>
-      <div className={classes.bold}>Quantity: {quantity}</div>
+      <div className={classes.bold}>
+        Quantity: {isInCart ? product.cartQuantity : quantity}
+      </div>
       <div className={classes.buttonList}>
         <Flex justify="center">
-          <Button onClick={addToCartHandler}>Add to cart</Button>
-          <Button type="secondary" test={test}>
-            Preview
-          </Button>
+          {isInCart ? (
+            <Button type="danger" onClick={removeHandler}>
+              Delete
+            </Button>
+          ) : (
+            <>
+              <Button onClick={addToCartHandler} disabled={isAddToCartDisabled}>
+                Add to cart
+              </Button>
+              <Button type="secondary">Edit</Button>
+            </>
+          )}
         </Flex>
       </div>
     </div>

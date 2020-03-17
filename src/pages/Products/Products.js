@@ -4,8 +4,7 @@ import { Flex } from '../../components/shared/Flex/Flex'
 import { CreateProductModal } from '../../components/CreateProductModal/CreateProductModal'
 import { Button } from '../../components/shared/Button/Button'
 
-const Products = ({ cart, test }) => {
-  console.log('Products.js', cart)
+const Products = ({ cart, setCart }) => {
   const [products, setProducts] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -26,7 +25,12 @@ const Products = ({ cart, test }) => {
       <Button onClick={toggleModalHandler}>Create product</Button>
       <Flex wrap="wrap" justify="space-between">
         {products.map(product => (
-          <Product key={product.id} product={product} test={test} />
+          <Product
+            key={product.id}
+            product={product}
+            cart={cart}
+            setCart={setCart}
+          />
         ))}
       </Flex>
       <CreateProductModal
