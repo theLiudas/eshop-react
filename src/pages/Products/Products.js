@@ -3,19 +3,20 @@ import Product from '../../components/Product'
 import { Flex } from '../../components/shared/Flex/Flex'
 import { CreateProductModal } from '../../components/CreateProductModal/CreateProductModal'
 import { Button } from '../../components/shared/Button/Button'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Products = ({ cart, setCart }) => {
-  const [products, setProducts] = useState([])
+const Products = () => {
+  const dispatch = useDispatch()
+  const products = useSelector(state => state.products)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const toggleModalHandler = () => setIsModalOpen(!isModalOpen)
-  const addNewProduct = newProduct => setProducts([...products, newProduct])
 
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await fetch('http://localhost:4000/products')
       const products = await response.json()
-      setProducts(products)
+      dispatch({ type: 'UPLOAD_PRODUCTS', products })
     }
     fetchProducts()
   }, [])
@@ -25,18 +26,12 @@ const Products = ({ cart, setCart }) => {
       <Button onClick={toggleModalHandler}>Create product</Button>
       <Flex wrap="wrap" justify="space-between">
         {products.map(product => (
-          <Product
-            key={product.id}
-            product={product}
-            cart={cart}
-            setCart={setCart}
-          />
+          <Product key={product.id} product={product} />
         ))}
       </Flex>
       <CreateProductModal
         isModalOpen={isModalOpen}
         toggleModal={toggleModalHandler}
-        addNewProduct={addNewProduct}
       />
     </>
   )

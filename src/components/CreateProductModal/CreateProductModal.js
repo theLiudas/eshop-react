@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 import classes from './CreateProductModal.module.css'
 import { random } from 'faker'
+import { Input } from '../Input/Input'
+import { useDispatch } from 'react-redux'
 
 const emptyObject = () => ({
   id: random.uuid(),
@@ -12,11 +14,8 @@ const emptyObject = () => ({
   image: `https://picsum.photos/id/${random.number(200) || 1}/600`
 })
 
-export const CreateProductModal = ({
-  isModalOpen,
-  toggleModal,
-  addNewProduct
-}) => {
+export const CreateProductModal = ({ isModalOpen, toggleModal }) => {
+  const dispatch = useDispatch()
   const [formState, setFormState] = useState(emptyObject())
   const [errors, setErrors] = useState({})
   const [success, setSuccess] = useState(false)
@@ -39,16 +38,14 @@ export const CreateProductModal = ({
     })
   }
 
-  const inputChangeHandler = (formStateKey, event) =>
+  const inputChangeHandler = (formStateKey, event) => {
+    console.log('inputChangeHandler -> event', event)
+    console.log('inputChangeHandler -> formStateKey', formStateKey)
+
     setFormState({
       ...formState,
       [formStateKey]: event.target.value
     })
-
-  const quantityChangeHandler = event => {
-    const numberQuantity = Number(event.target.value)
-    const quantity = numberQuantity <= 0 ? 0 : numberQuantity
-    setFormState({ ...formState, quantity })
   }
 
   const validate = () => {
@@ -88,7 +85,7 @@ export const CreateProductModal = ({
       if (response.status === 201) {
         setSuccess(true)
         const newProduct = await response.json()
-        addNewProduct(newProduct)
+        dispatch({ type: 'ADD_NEW_PRODUCT', newProduct })
       }
     }
   }
@@ -111,60 +108,39 @@ export const CreateProductModal = ({
           </>
         ) : (
           <form onSubmit={formSubmitHandler}>
-            <div className={classes.formControl}>
-              <label htmlFor="name">Product name</label>
-              <input
-                type="text"
-                id="name"
-                value={formState.name}
-                onChange={event => inputChangeHandler('name', event)}
-              />
-              {errors.name && (
-                <div className={classes.error}>{errors.name}</div>
-              )}
-            </div>
-            <div className={classes.formControl}>
-              <label htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                rows="4"
-                value={formState.description}
-                onChange={event => inputChangeHandler('description', event)}
-              />
-              {errors.description && (
-                <div className={classes.error}>{errors.description}</div>
-              )}
+            <Input
+              inputKey="name"
+              changeHandler={inputChangeHandler}
+              errors={errors}
+              label="Product name"
+              value={formState.name}
+            />
+            <Input
+              inputKey="description"
+              value={formState.description}
+              changeHandler={inputChangeHandler}
+              label="Description"
+              errors={errors}
+              type="textarea"
+            >
               <button onClick={generateDescriptionHandler}>
                 Generate description
               </button>
-            </div>
-            <div className={classes.formControl}>
-              <label htmlFor="price">Price</label>
-              <input
-                type="number"
-                id="price"
-                value={formState.price}
-                onChange={event => inputChangeHandler('price', event)}
-              />
-              {errors.price && (
-                <div className={classes.error}>{errors.price}</div>
-              )}
-            </div>
-            <div className={classes.formControl}>
-              <label htmlFor="quantity" value={formState.quantity}>
-                Quantity
-              </label>
-              <input
-                type="number"
-                id="quantity"
-                min="0"
-                onChange={quantityChangeHandler}
-                value={formState.quantity}
-              />
-              {errors.quantity && (
-                <div className={classes.error}>{errors.quantity}</div>
-              )}
-            </div>
+            </Input>
+            <Input
+              inputKey="price"
+              changeHandler={inputChangeHandler}
+              errors={errors}
+              label="Price"
+              value={formState.price}
+            />
+            <Input
+              inputKey="quantity"
+              changeHandler={inputChangeHandler}
+              errors={errors}
+              label="Quantity"
+              value={formState.quantity}
+            />
             <div className={classes.buttonList}>
               <button onClick={toggleModal}>Cancel</button>
               <button>Create</button>

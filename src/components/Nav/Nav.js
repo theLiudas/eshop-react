@@ -2,8 +2,10 @@ import React from 'react'
 import classes from './Nav.module.css'
 import { Flex } from '../shared/Flex/Flex'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+export const Nav = () => {
+  const cart = useSelector(state => state.cart)
 
-export const Nav = ({ cart }) => {
   const itemsInCart = cart.reduce(
     (current, currentItem) => current + currentItem.cartQuantity,
     0
