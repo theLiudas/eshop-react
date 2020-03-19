@@ -14,7 +14,7 @@ const generateProducts = () =>
   }))
 
 const init = () => {
-  const products = { products: generateProducts() }
+  const products = { products: generateProducts(), customers: [], orders: [] }
   fs.writeFileSync('./db.json', JSON.stringify(products, null, 2))
 }
 
