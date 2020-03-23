@@ -301,6 +301,59 @@
       "brand": "payment"
     }
   ],
-  "customers": [],
-  "orders": []
+  "customers": [
+    {
+      "id": "6398395f-8a1a-4c3d-9444-91d5bb1d7daf",
+      "name": "Liudas",
+      "address": "testo g.1",
+      "phone": "+370546456",
+      "email": "liudas@gmail.com"
+    },
+    {
+      "id": "be1f58c4-6a8b-48a8-b961-44d27254248f",
+      "name": "Liudas bebrauskas",
+      "address": "A. Vivulskio 23-23",
+      "phone": "+37061008483",
+      "email": "liudas@webby.lt"
+    },
+    {
+      "id": "7f036da1-571a-4ccd-b287-e7ddf0b0f798",
+      "name": "Liudas bebrauskas",
+      "address": "A. Vivulskio 23-23",
+      "phone": "+37061008483",
+      "email": "liudas@webby.lt"
+    }
+  ],
+  "orders": [
+    {
+      "id": "83886229-62eb-4c58-bf17-4ffade329fa9",
+      "products": [
+        "dc6de408-ffa2-4b5c-b3ad-c7126b0e4846"
+      ],
+      "sum": 98,
+      "customerId": "6398395f-8a1a-4c3d-9444-91d5bb1d7daf",
+      "orderDate": 1584985152819
+    },
+    {
+      "id": "1b2a71fb-c411-41ab-a348-981c86c9dff6",
+      "products": [
+        "dc6de408-ffa2-4b5c-b3ad-c7126b0e4846",
+        "9a881ea5-bf7b-4f88-906b-a33e20f8b293",
+        "997bc666-f485-4af4-b08c-e43c4a1a3d6d",
+        "4702c2e0-90fc-4790-99ec-bbb641ec7494"
+      ],
+      "sum": 379,
+      "customerId": "be1f58c4-6a8b-48a8-b961-44d27254248f",
+      "orderDate": 1584985439424
+    },
+    {
+      "id": "6579f587-254a-4b67-bf3b-99e81311c2ff",
+      "products": [
+        "9a881ea5-bf7b-4f88-906b-a33e20f8b293"
+      ],
+      "sum": 53,
+      "customerId": "7f036da1-571a-4ccd-b287-e7ddf0b0f798",
+      "orderDate": 1584986149781
+    }
+  ]
 }

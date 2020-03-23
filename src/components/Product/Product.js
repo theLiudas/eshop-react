@@ -83,7 +83,9 @@ export const Product = ({ product, isCartPage }) => {
               <Button onClick={addToCartHandler} disabled={isAddToCartDisabled}>
                 Add to cart
               </Button>
-              <Button type="secondary">Edit</Button>
+              <Button type="secondary" onClick={() => {}}>
+                Edit
+              </Button>
             </>
           )}
         </Flex>
