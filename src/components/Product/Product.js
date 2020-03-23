@@ -3,10 +3,16 @@ import classes from './Product.module.css'
 import { Button } from '../shared/Button/Button'
 import { Flex } from '../shared/Flex/Flex'
 import { useSelector, useDispatch } from 'react-redux'
+import * as actionTypes from '../../redux/actionTypes'
+import { getCart } from '../../redux/selectors'
+import withTooltip from '../../hoc/withDimension'
+
+const EditButtonWithLabel = withTooltip(Button, 'This is edit button')
+const AddButtonWithLabel = withTooltip(Button, 'This is add button')
 
 export const Product = ({ product, isCartPage }) => {
   const dispatch = useDispatch()
-  const cart = useSelector(state => state.cart)
+  const cart = useSelector(getCart)
   const [isAddToCartDisabled, setIsAddToCartDisabled] = useState(false)
   const { image, name, description, price, quantity, id } = product
   const shortDescription =
@@ -22,13 +28,13 @@ export const Product = ({ product, isCartPage }) => {
       const newCart = [...cart]
       newCart[productIndex].cartQuantity += 1
       dispatch({
-        type: 'REPLACE_CART',
+        type: actionTypes.REPLACE_CART,
         newCart
       })
     }
     if (productIndex === -1) {
       dispatch({
-        type: 'ADD_TO_CART',
+        type: actionTypes.ADD_TO_CART,
         newCartItem: { ...product, cartQuantity: 1 }
       })
     }
@@ -47,7 +53,7 @@ export const Product = ({ product, isCartPage }) => {
     if (itemToRemove.cartQuantity > 1) {
       const newCart = [...cart]
       newCart[itemToRemoveIndex].cartQuantity -= 1
-      dispatch({ type: 'REPLACE_CART', newCart })
+      dispatch({ type: actionTypes.REPLACE_CART, newCart })
     }
   }
 
@@ -80,10 +86,15 @@ export const Product = ({ product, isCartPage }) => {
             </Button>
           ) : (
             <>
-              <Button onClick={addToCartHandler} disabled={isAddToCartDisabled}>
+              <AddButtonWithLabel
+                onClick={addToCartHandler}
+                disabled={isAddToCartDisabled}
+              >
                 Add to cart
-              </Button>
-              <Button type="secondary">Edit</Button>
+              </AddButtonWithLabel>
+              <EditButtonWithLabel type="secondary" onClick={() => {}}>
+                Edit
+              </EditButtonWithLabel>
             </>
           )}
         </Flex>

@@ -38,15 +38,11 @@ export const CreateProductModal = ({ isModalOpen, toggleModal }) => {
     })
   }
 
-  const inputChangeHandler = (formStateKey, event) => {
-    console.log('inputChangeHandler -> event', event)
-    console.log('inputChangeHandler -> formStateKey', formStateKey)
-
+  const inputChangeHandler = (formStateKey, event) =>
     setFormState({
       ...formState,
       [formStateKey]: event.target.value
     })
-  }
 
   const validate = () => {
     let isFormValid = true

@@ -29,7 +29,9 @@ export const Input = ({
           onChange={event => changeHandler(inputKey, event)}
         />
       )}
-      {errors.name && <div className={classes.error}>{errors.name}</div>}
+      {errors[inputKey] && (
+        <div className={classes.error}> {errors[inputKey]} </div>
+      )}
       {children}
     </div>
   )

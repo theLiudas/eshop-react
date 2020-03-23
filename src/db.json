@@ -300,5 +300,7 @@
       "category": "Automotive",
       "brand": "Manager"
     }
-  ]
+  ],
+  "orders": [],
+  "customers": []
 }

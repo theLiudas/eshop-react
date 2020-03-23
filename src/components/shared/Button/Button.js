@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './Button.module.css'
+import PropTypes from 'prop-types'
 
 export const Button = ({ onClick, children, type, disabled }) => {
   const styles = [classes.button]
@@ -28,6 +29,13 @@ export const Button = ({ onClick, children, type, disabled }) => {
       </button>
     </div>
   )
+}
+
+Button.propTypes = {
+  type: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  children: PropTypes.string
 }
 
 Button.defaultProps = {
