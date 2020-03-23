@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { getOrders, getPorduct, getCustomers } from '../../redux/selectors'
 
 export const Orders = () => {
   const dispatch = useDispatch()
-  const orders = useSelector(state => state.orders)
-  const products = useSelector(state => state.products)
-  const customers = useSelector(state => state.customers)
+  const orders = useSelector(getOrders)
+  const products = useSelector(getPorduct)
+  const customers = useSelector(getCustomers)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +42,8 @@ export const Orders = () => {
             customers.find(customer => {
               console.log(customer.id)
               console.log(order.customerId)
-              return customer.id === order.customerId}) || {}
+              return customer.id === order.customerId
+            }) || {}
 
           return (
             <tr key={order.id}>

@@ -1,8 +1,10 @@
+import * as actionTypes from './actionTypes'
+
 export default (state = [], action) => {
   switch (action.type) {
-    case 'REPLACE_CUSTOMERS':
+    case actionTypes.REPLACE_CUSTOMERS:
       return action.newCustomers
-    case 'ADD_CUSTOMER':
+    case actionTypes.ADD_CUSTOMER:
       return [...state, action.newCustomer]
     default:
       return state

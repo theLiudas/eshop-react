@@ -7,10 +7,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Input } from '../../components/Input/Input'
 import { useState } from 'react'
 import { random } from 'faker'
+import { getCart } from '../../redux/selectors'
 
 // 8. TODO: <-- BONUS TASK --> Pasidaryti api wrapperi
 export const Cart = () => {
-  const cart = useSelector(state => state.cart)
+  const cart = useSelector(getCart)
   const dispatch = useDispatch()
   const [errors, setErrors] = useState({})
   const [formState, setFormState] = useState({
@@ -24,8 +25,10 @@ export const Cart = () => {
       ...formState,
       [formStateKey]: event.target.value
     })
+  const [isCheckout, setIsCheckout] = useState(false)
+  const isSomeItemsInCart = !!cart.length
   const inputs = [
-    { label: 'Name', value: formState.name, inputChangeHandler, key: 'name' },
+    { label: 'Name', value: formState.name, key: 'name' },
     {
       label: 'Address',
       value: formState.address,
@@ -42,9 +45,6 @@ export const Cart = () => {
       key: 'email'
     }
   ]
-  const [isCheckout, setIsCheckout] = useState(false)
-
-  const isSomeItemsInCart = !!cart.length
 
   const validate = () => {
     let isFormValid = true
@@ -154,7 +154,7 @@ export const Cart = () => {
           {inputs.map(input => (
             <Input
               key={input.key}
-              changeHandler={input.inputChangeHandler}
+              changeHandler={inputChangeHandler}
               errors={errors}
               inputKey={input.key}
               label={input.label}

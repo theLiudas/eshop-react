@@ -1,8 +1,10 @@
+import * as actionTypes from './actionTypes'
+
 export default (state = [], action) => {
   switch (action.type) {
-    case 'REPLACE_ORDERS':
+    case actionTypes.REPLACE_ORDERS:
       return action.newOrders
-    case 'ADD_ORDER':
+    case actionTypes.ADD_ORDER:
       return [...state, action.newOrder]
     default:
       return state
