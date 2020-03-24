@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getOrders, getPorduct, getCustomers } from '../../redux/selectors'
+import { getOrders, getCustomers, getProducts } from '../../redux/selectors'
 
 export const Orders = () => {
   const dispatch = useDispatch()
   const orders = useSelector(getOrders)
-  const products = useSelector(getPorduct)
+  const products = useSelector(getProducts)
   const customers = useSelector(getCustomers)
 
   useEffect(() => {

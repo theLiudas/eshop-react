@@ -1,6 +1,6 @@
 // Selectors related to products
 export const getProducts = state => state.products
-export const getPorduct = (state, productId) =>
+export const getProduct = (state, productId) =>
   state.products.find(product => product.id === productId)
 
 // Selectors related to cart
