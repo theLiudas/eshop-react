@@ -6,8 +6,8 @@ import { Button } from '../../components/shared/Button/Button'
 import { useSelector, useDispatch } from 'react-redux'
 import { Input } from '../../components/Input/Input'
 import { useState } from 'react'
-import { random } from 'faker'
 import { getCart } from '../../redux/selectors'
+import { initiateCheckout } from '../../redux/actions'
 
 // 8. TODO: <-- BONUS TASK --> Pasidaryti api wrapperi
 export const Cart = () => {
@@ -72,59 +72,10 @@ export const Cart = () => {
   const formSubmitHandler = async event => {
     event.preventDefault()
     if (validate()) {
-      // su Object.assign irgi galime nukopijuoti objekta
-      // const newCustomer = Object.assign({ id: random.uuid() }, formState)
-      const newCustomer = { id: random.uuid(), ...formState }
-
-      const newOrder = {
-        id: random.uuid(),
-        products: cart.map(cartItem => cartItem.id),
-        sum: cart.reduce(
-          (lastReturnOfReduce, currentArrayItem) =>
-            lastReturnOfReduce +
-            currentArrayItem.price * currentArrayItem.cartQuantity,
-          0
-        ),
-        customerId: newCustomer.id,
-        orderDate: new Date().getTime()
-      }
-
-      try {
-        const orderResponse = await fetch('http://localhost:4000/orders', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            cors: true
-          },
-          body: JSON.stringify(newOrder)
-        })
-        const orderData = await orderResponse.json()
-        dispatch({ type: 'ADD_ORDER', newOrder: orderData })
-      } catch (err) {
-        console.log('order response failed with following message:', err)
-      }
-
-      try {
-        const customerResponse = await fetch(
-          'http://localhost:4000/customers',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              cors: true
-            },
-            body: JSON.stringify(newCustomer)
-          }
-        )
-        const customerData = await customerResponse.json()
-        dispatch({ type: 'ADD_CUSTOMER', newCustomer: customerData })
-      } catch (err) {
-        console.log('customer response failed with following message:', err)
-      }
-      setIsCheckout(false)
-      dispatch({ type: 'REPLACE_CART', newCart: [] })
+      dispatch(initiateCheckout(formState, setIsCheckout))
     }
   }
+
   return (
     <>
       <Flex

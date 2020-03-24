@@ -5,10 +5,6 @@ import { Flex } from '../shared/Flex/Flex'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionTypes from '../../redux/actionTypes'
 import { getCart } from '../../redux/selectors'
-import withTooltip from '../../hoc/withDimension'
-
-const EditButtonWithLabel = withTooltip(Button, 'This is edit button')
-const AddButtonWithLabel = withTooltip(Button, 'This is add button')
 
 export const Product = ({ product, isCartPage }) => {
   const dispatch = useDispatch()
@@ -86,15 +82,12 @@ export const Product = ({ product, isCartPage }) => {
             </Button>
           ) : (
             <>
-              <AddButtonWithLabel
-                onClick={addToCartHandler}
-                disabled={isAddToCartDisabled}
-              >
+              <Button onClick={addToCartHandler} disabled={isAddToCartDisabled}>
                 Add to cart
-              </AddButtonWithLabel>
-              <EditButtonWithLabel type="secondary" onClick={() => {}}>
+              </Button>
+              <Button type="secondary" onClick={() => {}}>
                 Edit
-              </EditButtonWithLabel>
+              </Button>
             </>
           )}
         </Flex>
