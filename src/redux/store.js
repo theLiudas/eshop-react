@@ -2,7 +2,8 @@ import cartReducer from './reducer-cart'
 import productsReducer from './reducer-products'
 import customersReducer from './reducer-customers'
 import ordersReducer from './reducer-orders'
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -11,9 +12,6 @@ const rootReducer = combineReducers({
   orders: ordersReducer
 })
 
-const store = createStore(
-  rootReducer,
-  window.REDUX_DEVTOOLS_EXTENSION && window.REDUX_DEVTOOLS_EXTENSION()
-)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export default store
